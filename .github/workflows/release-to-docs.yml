@@ -1,0 +1,55 @@
+name: Release notes → doc updates
+
+on:
+  push:
+    branches: [main]
+    paths: ["releases/**"]
+  workflow_dispatch:
+    inputs:
+      release:
+        description: "Release note to process, e.g. releases/2026-11-04-v4.12.md"
+        required: true
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  draft:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 2
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - run: pip install -r requirements.txt
+
+      - name: Find new release notes
+        id: releases
+        run: |
+          if [ -n "${{ github.event.inputs.release }}" ]; then
+            echo "files=${{ github.event.inputs.release }}" >> "$GITHUB_OUTPUT"
+          else
+            echo "files=$(git diff --name-only --diff-filter=A HEAD~1 HEAD -- releases/ | tr '\n' ' ')" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Draft doc updates with Claude
+        if: steps.releases.outputs.files != ''
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+        run: python scripts/update_docs.py ${{ steps.releases.outputs.files }}
+
+      - name: Open a pull request for human review
+        if: steps.releases.outputs.files != ''
+        uses: peter-evans/create-pull-request@v6
+        with:
+          branch: docs/release-update-${{ github.run_number }}
+          title: "Docs: updates for ${{ steps.releases.outputs.files }}"
+          body-path: out/review-summary.md
+          commit-message: "Draft doc updates from release notes"
+          labels: needs-human-review
+          add-paths: docs/
