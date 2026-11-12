@@ -1,0 +1,21 @@
+{
+  "product": "Ringo",
+  "current_version": "4.12",
+  "renamed_ui_labels": {
+    "Reports": "Analytics"
+  },
+  "removed_ui_labels": [],
+  "facts": {
+    "recording_retention_days": { "Starter": 30, "Pro": 180, "Enterprise": "custom" },
+    "ai_call_summary": {
+      "plans": ["Pro", "Enterprise"],
+      "setting_path": "Settings → Recording → AI call summary"
+    },
+    "csv_export_location": "the ⋯ menu on each dashboard"
+  },
+  "feature_releases": {
+    "call-recording": "4.12",
+    "analytics": "4.12",
+    "call-routing": "4.9"
+  }
+}
