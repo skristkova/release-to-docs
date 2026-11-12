@@ -1,0 +1,19 @@
+ticket_id,created,topic,question
+1001,2026-10-01,analytics,Where do I export call data?
+1002,2026-10-02,call-recording,How do I turn on recording for one team only?
+1003,2026-10-02,call-routing,Calls go to voicemail too fast
+1004,2026-10-03,analytics,Export button is missing
+1005,2026-10-05,call-recording,How long do you keep recordings?
+1006,2026-10-06,analytics,How do I change the date range on a dashboard?
+1007,2026-10-07,call-routing,How do I set up an IVR menu?
+1008,2026-10-08,call-recording,Can I download a recording?
+1009,2026-10-09,analytics,Cannot find Reports
+1010,2026-10-10,billing,How do I change my plan?
+1011,2026-10-12,analytics,Where did the CSV export go?
+1012,2026-10-13,call-recording,Recording retention on Pro?
+1013,2026-10-14,call-routing,Forward unanswered calls to my mobile
+1014,2026-10-15,analytics,Cannot find Reports after update
+1015,2026-10-16,call-recording,Turn on AI summary
+1016,2026-10-18,analytics,Export dashboard to Excel
+1017,2026-10-19,billing,Invoice address change
+1018,2026-10-20,call-recording,Where do I see the AI call summary?
