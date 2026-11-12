@@ -1,0 +1,25 @@
+name: Docs drift check
+
+on:
+  schedule:
+    - cron: "0 7 * * 1"   # every Monday 07:00 UTC
+  pull_request:
+    paths: ["docs/**", "product/**"]
+  workflow_dispatch:
+
+jobs:
+  drift:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Check docs against product facts
+        run: python scripts/check_drift.py
+      - name: Most-asked topics
+        if: always()
+        run: python scripts/top_questions.py >> "$GITHUB_STEP_SUMMARY"
+      - name: Add drift report to the run summary
+        if: always()
+        run: cat out/drift-report.md >> "$GITHUB_STEP_SUMMARY"
